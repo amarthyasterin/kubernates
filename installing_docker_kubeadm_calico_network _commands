@@ -20,11 +20,11 @@ sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
 
 
-#to initiating & creating link to join node
-sudo kubeadm init
-
 #to creating calico network
 
 sudo curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
 sudo kubectl apply -f calico.yaml
 
+
+#to initiating & creating link to join node
+sudo kubeadm init

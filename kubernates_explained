@@ -3,13 +3,18 @@ pods
 > pod are the smallest most diployable bjects in kubernates.
 > a pod represent a singleinstance of running process in your cluster.
 
-to list your all ports 
+to list your all pods 
 ---------------------------
 kubectl get pods  ---cmd
 
 listing about pods info 
 ----------------------------- 
 kubectl get pods -o wide
+
+
+to create pod
+--------------
+kubectl create -f filename.yml
 
 
 for applying the yml script
@@ -33,3 +38,114 @@ service-v1
 replicationcontroller-v1
 replicaset-apps/v1
 deployment-apps/v1
+
+
+control plane
+---------------
+In kub cluster the control plain nodes (also known as master nodes). run services that are required to control the kubernates cluster.
+----- combination of master
+
+data plane
+--------------
+entire worker node sphere is called dataplane -- combination of nodes
+
+replication controler
+------------------------
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: replicationcontroller5
+  labels:
+    tier: front-end
+spec:
+  template:
+    metadata:
+      name: nginx
+      labels:
+        tier: n1
+    spec:
+      containers:
+        - name: nginx4
+          image: nginx
+  replicas: 20
+
+
+
+for changeing pods number 
+-------------------------------
+edit rep.yml 
+
+then
+
+> kubectl apply -f rep.yml
+
+> kubectl replace -f rep.yml
+
+> kubectl edit replicationcontroller <replicationcontroller5>
+
+> kubectl scale --replicas=10 replicationcontroller <replicationcontroller5>
+
+
+to delete replicationcontroller
+--------------------------------
+kubectl delete replicationcontroller replicationcontroller5
+
+
+replica set
+-------------
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rep
+  labels:
+    tier: front-end
+spec:
+  replicas: 5
+  selector:
+    matchLabels: 
+      tier: front-end
+  template:
+    metadata:
+       name: nginx
+       labels:
+         tier: front-end
+    spec:
+     containers:
+       - name: nginx
+         image: nginx
+
+service
+--------
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: port-mapping
+spec:
+  type: NodePort
+  ports:
+    _ nodePort: 30006
+      Port: 80
+      targetPort: 80
+  selector:
+    tier: front-end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
